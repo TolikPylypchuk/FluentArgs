@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentArgs", "FluentArgs\FluentArgs.csproj", "{4D5E9B15-FD31-4F9B-83C9-D1F7ECFA0246}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentArgs.Sample", "FluentArgs.Sample\FluentArgs.Sample.csproj", "{792D39F2-4F6C-4E5A-A948-CC4CE74F9C65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4D5E9B15-FD31-4F9B-83C9-D1F7ECFA0246}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D5E9B15-FD31-4F9B-83C9-D1F7ECFA0246}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D5E9B15-FD31-4F9B-83C9-D1F7ECFA0246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{792D39F2-4F6C-4E5A-A948-CC4CE74F9C65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792D39F2-4F6C-4E5A-A948-CC4CE74F9C65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792D39F2-4F6C-4E5A-A948-CC4CE74F9C65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792D39F2-4F6C-4E5A-A948-CC4CE74F9C65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
