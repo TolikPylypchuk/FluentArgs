@@ -1,21 +1,27 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
 
-namespace FluentArgs
+using FluentArgs.Parsers;
+using FluentArgs.Providers;
+
+namespace FluentArgs.Builders
 {
     public class ArgsBuilder
     {
         public static readonly string DefaultNamePrefix = "--";
         public static readonly string DefaultShortNamePrefix = "-";
 
-        private readonly string[] args;
+        private readonly ServiceContainer argsContainer = new ServiceContainer();
+
+        private readonly Dictionary<Type, object> parsers = new Dictionary<Type, object>();
+        private readonly Dictionary<Type, object> providers = new Dictionary<Type, object>();
+        
         private string namePrefix = DefaultNamePrefix;
         private string shortNamePrefix = DefaultShortNamePrefix;
 
-        private readonly ArrayList parsers = new ArrayList();
-        
-        internal ArgsBuilder(string[] args)
-            => this.args = args;
+        internal ArgsBuilder()
+        { }
 
         public ArgsBuilder SetNamePrefix(string prefix)
         {
@@ -29,7 +35,22 @@ namespace FluentArgs
             return this;
         }
 
-        public Args Build()
+        public ArgBuilder<T> AddArg<T>()
+            => new ArgBuilder<T>(this);
+
+        public ArgsBuilder AddParser<T>(ArgParser<T> parser)
+        {
+            this.parsers[typeof(T)] = parser;
+            return this;
+        }
+
+        public ArgsBuilder AddValueProvider<T>(IArgValueProvider<T> provider)
+        {
+            this.providers[typeof(T)] = provider;
+            return this;
+        }
+
+        public ArgsBuildResult Build(string[] args)
             => throw new NotImplementedException();
 
         internal void AddArg<T>(Arg<T> arg)

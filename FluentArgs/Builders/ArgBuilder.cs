@@ -1,12 +1,12 @@
-﻿namespace FluentArgs
+﻿namespace FluentArgs.Builders
 {
-    public class ArgBuilder<T>
+    public class ArgBuilder<T> : DerivedBuilder<ArgsBuilder>
     {
-        private readonly ArgsBuilder baseBuilder;
         private readonly Arg<T> arg = new Arg<T>();
 
         internal ArgBuilder(ArgsBuilder baseBuilder)
-            => this.baseBuilder = baseBuilder;
+            : base(baseBuilder)
+        { }
 
         public ArgBuilder<T> WithName(string name)
         {
@@ -20,10 +20,16 @@
             return this;
         }
 
-        public ArgsBuilder And()
+        public ArgBuilder<T> CaseSensitive()
         {
-            this.baseBuilder.AddArg(this.arg);
-            return this.baseBuilder;
+            this.arg.CaseSensitive = true;
+            return this;
+        }
+
+        public ArgBuilder<T> CaseInsensitive()
+        {
+            this.arg.CaseSensitive = false;
+            return this;
         }
     }
 }

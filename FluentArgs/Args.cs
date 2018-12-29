@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 
+using FluentArgs.Builders;
+using FluentArgs.Parsers;
+using FluentArgs.Providers;
+
 namespace FluentArgs
 {
-    public class Args
+    public sealed class Args
     {
         private readonly ServiceContainer argsContainer = new ServiceContainer();
         private readonly List<string> commands = new List<string>();
@@ -16,8 +20,18 @@ namespace FluentArgs
             this.commands = commands;
         }
 
-        public static ArgsBuilder Builder(string[] args)
-            => new ArgsBuilder(args);
+        public static ArgsBuilder Builder()
+        {
+            ArgsBuilder builder = new ArgsBuilder();
+
+            builder.AddParser(new StringArgParser());
+            builder.AddParser(new IntArgParser());
+            builder.AddParser(new DoubleArgParser());
+            builder.AddParser(new DateTimeArgParser());
+            builder.AddValueProvider(new BoolArgProvider());
+
+            return builder;
+        }
 
         public Arg<T> Get<T>(string name, bool required = true)
         {
