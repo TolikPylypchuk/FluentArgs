@@ -5,14 +5,21 @@
         static void Main(string[] args)
         {
             var result = Args.Builder()
-                .AddArg<string>()
-                    .WithName("input")
-                    .WithShortName("i")
+                .WithoutCommands()
+                    .AddArg<string>()
+                        .WithName("input")
+                        .WithShortName("i")
+                        .WithDescription("The input file.")
+                        .WithPlaceholder("file")
+                        .And()
+                    .AddArg<bool>()
+                        .WithName("force")
+                        .WithShortName("f")
+                        .WithDescription("Forces the execution.")
+                        .And()
                     .And()
-                .AddArg<bool>()
-                    .WithName("force")
-                    .WithShortName("f")
-                    .And()
+                .AddCommand("")
+                .And()
                 .Build(args);
         }
     }

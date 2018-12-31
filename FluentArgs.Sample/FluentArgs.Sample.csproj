@@ -10,4 +10,8 @@
     <ErrorReport>queue</ErrorReport>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FluentArgs\FluentArgs.csproj" />
+  </ItemGroup>
+
 </Project>

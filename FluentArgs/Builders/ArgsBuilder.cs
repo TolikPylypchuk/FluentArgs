@@ -11,6 +11,7 @@ namespace FluentArgs.Builders
     {
         public static readonly string DefaultNamePrefix = "--";
         public static readonly string DefaultShortNamePrefix = "-";
+        public static readonly bool DefaultCaseSensitivity = true;
 
         private readonly ServiceContainer argsContainer = new ServiceContainer();
 
@@ -19,41 +20,60 @@ namespace FluentArgs.Builders
         
         private string namePrefix = DefaultNamePrefix;
         private string shortNamePrefix = DefaultShortNamePrefix;
+        private bool isCaseSensitive = DefaultCaseSensitivity;
 
         internal ArgsBuilder()
         { }
 
         public ArgsBuilder SetNamePrefix(string prefix)
         {
-            this.namePrefix = prefix;
+            this.namePrefix = prefix ?? throw new ArgumentNullException(nameof(prefix));
             return this;
         }
 
         public ArgsBuilder SetShortNamePrefix(string prefix)
         {
-            this.shortNamePrefix = prefix;
+            this.shortNamePrefix = prefix ?? throw new ArgumentNullException(nameof(prefix));
             return this;
         }
 
-        public ArgBuilder<T> AddArg<T>()
-            => new ArgBuilder<T>(this);
+        public ArgsBuilder SetCaseSensitivity(bool isCaseSensitive)
+        {
+            this.isCaseSensitive = isCaseSensitive;
+            return this;
+        }
 
         public ArgsBuilder AddParser<T>(ArgParser<T> parser)
         {
-            this.parsers[typeof(T)] = parser;
+            this.parsers[typeof(T)] = parser ?? throw new ArgumentNullException(nameof(parser));
             return this;
         }
 
         public ArgsBuilder AddValueProvider<T>(IArgValueProvider<T> provider)
         {
-            this.providers[typeof(T)] = provider;
+            this.providers[typeof(T)] = provider ?? throw new ArgumentNullException(nameof(provider));
             return this;
         }
 
-        public ArgsBuildResult Build(string[] args)
-            => throw new NotImplementedException();
+        public CommandBuilder AddCommand(string name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-        internal void AddArg<T>(Arg<T> arg)
+            if (name == String.Empty)
+            {
+                throw new ArgumentOutOfRangeException(nameof(name));
+            }
+
+            return new CommandBuilder(this, name);
+        }
+
+        public CommandBuilder WithoutCommands()
+            => new CommandBuilder(this, null);
+
+        public ArgsBuildResult Build(string[] args)
             => throw new NotImplementedException();
     }
 }
