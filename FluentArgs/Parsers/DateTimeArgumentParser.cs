@@ -2,7 +2,7 @@
 
 namespace FluentArgs.Parsers
 {
-    public class DateTimeArgParser : ArgParser<DateTime>
+    public class DateTimeArgumentParser : ArgumentParser<DateTime>
     {
         protected override ParseResult<DateTime> Parse(string arg)
             => DateTime.TryParse(arg, out DateTime value)

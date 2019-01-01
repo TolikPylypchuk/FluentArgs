@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace FluentArgs.Parsers
 {
-    public abstract class ArgParser<T>
+    public abstract class ArgumentParser<T>
     {
         protected IList<Func<T, bool>> predicates = new List<Func<T, bool>>();
 
-        public ArgParser<T> WithCondition(Func<T, bool> predicate)
+        public ArgumentParser<T> WithCondition(Func<T, bool> predicate)
         {
             this.predicates.Add(predicate);
             return this;
