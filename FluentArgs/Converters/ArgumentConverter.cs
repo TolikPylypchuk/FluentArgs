@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FluentArgs.Parsers
+namespace FluentArgs.Converters
 {
-    public abstract class ArgumentParser<T>
+    public abstract class ArgumentConverter<T>
     {
         protected IList<Func<T, bool>> predicates = new List<Func<T, bool>>();
 
-        public ArgumentParser<T> WithCondition(Func<T, bool> predicate)
+        public ArgumentConverter<T> WithCondition(Func<T, bool> predicate)
         {
             this.predicates.Add(predicate);
             return this;
         }
 
-        public ParseResult<T> ParseAndCheck(string arg)
+        public Result<T> Convert(string arg)
         {
             var result = this.Parse(arg);
 
             return result.IsSuccess && this.predicates.All(predicate => predicate(result.Value))
                 ? result
-                : ParseResult.Failure<T>();
+                : Result.Failure<T>();
         }
 
-        protected abstract ParseResult<T> Parse(string arg);
+        protected abstract Result<T> Parse(string arg);
     }
 }
