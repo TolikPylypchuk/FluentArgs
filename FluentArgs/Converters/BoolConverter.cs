@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentArgs.Parsers
+namespace FluentArgs.Converters
 {
     public class BoolConverter : ArgumentConverter<bool>
     {
