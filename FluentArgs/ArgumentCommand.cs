@@ -1,13 +1,14 @@
-﻿using System.ComponentModel.Design;
+﻿using System.Collections;
 
 namespace FluentArgs
 {
     public class ArgumentCommand : ArgumentContainer
     {
-        internal ArgumentCommand(ServiceContainer container, ArgumentCommand command)
-            : base(container, command)
+        internal ArgumentCommand(IEnumerable arguments, ArgumentCommand command)
+            : base(arguments, command)
         { }
 
         public string Name { get; }
+        public string Description { get; }
     }
 }

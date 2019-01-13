@@ -1,6 +1,6 @@
 ﻿namespace FluentArgs.Providers
 {
-    public class BoolArgumentProvider : IArgumentValueProvider<bool>
+    public class BoolProvider : IArgumentValueProvider<bool>
     {
         public bool GetValue(bool isPresent)
             => isPresent;

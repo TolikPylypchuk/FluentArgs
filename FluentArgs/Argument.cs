@@ -10,7 +10,9 @@
         }
 
         public ArgumentDefinition<T> Definition { get; }
+        public string Name => this.Definition.Name;
         public T Value { get; }
         public bool IsValueDefault { get; }
+
     }
 }

@@ -9,8 +9,4 @@
     <NoWarn>1701;1702;IDE0049</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Builders\" />
-  </ItemGroup>
-
 </Project>

@@ -1,23 +1,21 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.Design;
+﻿using System.Collections;
 using System.Linq;
 
 namespace FluentArgs
 {
     public abstract class ArgumentContainer
     {
-        private protected ArgumentContainer(ServiceContainer container, ArgumentCommand command)
+        private protected ArgumentContainer(IEnumerable arguments, ArgumentCommand command)
         {
-            this.Container = container;
+            this.Arguments = arguments;
             this.Command = command;
         }
 
         public ArgumentCommand Command { get; }
 
-        private protected ServiceContainer Container { get; }
+        private protected IEnumerable Arguments { get; }
         
         public Argument<T> Get<T>(string name)
-            => ((IEnumerable<Argument<T>>)this.Container.GetService(typeof(IEnumerable<Argument<T>>)))
-                .FirstOrDefault(arg => arg.Definition.Name == name);
+            => this.Arguments.OfType<Argument<T>>().FirstOrDefault(arg => arg.Definition.Name == name);
     }
 }

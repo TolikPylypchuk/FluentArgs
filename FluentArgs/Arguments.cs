@@ -1,11 +1,32 @@
-﻿using System.ComponentModel.Design;
+﻿using System.Collections;
+
+using FluentArgs.Builders;
+using FluentArgs.Converters;
+using FluentArgs.Providers;
 
 namespace FluentArgs
 {
     public sealed class Arguments : ArgumentContainer
     {
-        internal Arguments(ServiceContainer container, ArgumentCommand command)
-            : base(container, command)
+        public static readonly string DefaultNamePrefix = "--";
+        public static readonly string DefaultShortNamePrefix = "-";
+
+        internal Arguments(IEnumerable arguments, ArgumentCommand command)
+            : base(arguments, command)
         { }
+
+        public static ArgumentsBuilder Builder()
+            => new ArgumentsBuilder()
+                .WithConverter(new StringConverter())
+                .WithConverter(new IntConverter())
+                .WithConverter(new LongConverter())
+                .WithConverter(new ByteConverter())
+                .WithConverter(new DoubleConverter())
+                .WithConverter(new CharConverter())
+                .WithConverter(new DateTimeConverter())
+                .WithConverter(new TimeSpanConverter())
+                .WithConverter(new UriConverter())
+                .WithConverter(new GuidConverter())
+                .WithProvider(new BoolProvider());
     }
 }
