@@ -18,9 +18,14 @@ namespace FluentArgs.Builders
 
         public ArgumentBuilder<T> WithName(string name)
         {
+            if (this.ArgumentDefinition.Name == String.Empty)
+            {
+                throw new NotSupportedException("Cannot change the name of the main argument.");
+            }
+
             if (name == String.Empty)
             {
-                throw new ArgumentOutOfRangeException(nameof(name), "Only the main argument can have an empty name.");
+                throw new ArgumentOutOfRangeException(nameof(name), "The empty name is reserved for the main argument.");
             }
 
             this.ArgumentDefinition.Name = name;
@@ -29,9 +34,14 @@ namespace FluentArgs.Builders
 
         public ArgumentBuilder<T> WithShortName(string shortName)
         {
+            if (this.ArgumentDefinition.ShortName == String.Empty)
+            {
+                throw new NotSupportedException("Cannot change the short name of the main argument.");
+            }
+
             if (shortName == String.Empty)
             {
-                throw new ArgumentOutOfRangeException(nameof(shortName), "Only the main argument can have an empty name.");
+                throw new ArgumentOutOfRangeException(nameof(shortName), "The empty short name is reserved for the main argument.");
             }
 
             this.ArgumentDefinition.ShortName = shortName;

@@ -17,7 +17,7 @@ namespace FluentArgs.Builders
         {
             if (this.Name == String.Empty)
             {
-                throw new NotSupportedException("Cannot change the name of the implicit main command.");
+                throw new NotSupportedException("Cannot change the name of the main command.");
             }
 
             if (name == null)
@@ -27,7 +27,7 @@ namespace FluentArgs.Builders
 
             if (name == String.Empty)
             {
-                throw new ArgumentOutOfRangeException("Empty name is reserved for the implicit main command.");
+                throw new ArgumentOutOfRangeException("The empty name is reserved for the main command.");
             }
 
             this.Name = name;

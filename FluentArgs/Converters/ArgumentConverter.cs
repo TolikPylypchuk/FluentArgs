@@ -6,11 +6,29 @@ namespace FluentArgs.Converters
 {
     public abstract class ArgumentConverter<T>
     {
-        protected IList<Func<T, bool>> predicates = new List<Func<T, bool>>();
+        private string errorMessage;
 
-        public ArgumentConverter<T> WithCondition(Func<T, bool> predicate)
+        protected ArgumentConverter(string errorMessage)
+            => this.ErrorMessage = errorMessage;
+
+        protected IList<(Func<T, bool> Predicate, string ErrorMessage)> Predicates { get; } =
+            new List<(Func<T, bool> Predicate, string ErrorMessage)>();
+
+        protected string ErrorMessage
         {
-            this.predicates.Add(predicate);
+            get => this.errorMessage;
+            set => this.errorMessage = value ?? throw new ArgumentNullException(nameof(errorMessage));
+        }
+
+        public ArgumentConverter<T> WithErrorMessage(string errorMessage)
+        {
+            this.ErrorMessage = errorMessage;
+            return this;
+        }
+
+        public ArgumentConverter<T> WithCondition(Func<T, bool> predicate, string errorMessage)
+        {
+            this.Predicates.Add((predicate, errorMessage));
             return this;
         }
 
@@ -18,9 +36,16 @@ namespace FluentArgs.Converters
         {
             var result = this.Parse(arg);
 
-            return result.IsSuccess && this.predicates.All(predicate => predicate(result.Value))
-                ? result
-                : Result.Failure<T>();
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var errorMessages = from pred in this.Predicates
+                                where !pred.Predicate(result.Value)
+                                select pred.ErrorMessage;
+
+            return errorMessages.Count() == 0 ? result : Result.Failure<T>(errorMessages);
         }
 
         protected abstract Result<T> Parse(string arg);
