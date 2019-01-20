@@ -45,6 +45,17 @@ namespace FluentArgs.Builders
         {
             var builder = new ArgumentBuilder<T>(this);
             this.ArgumentBuilders.Add(builder);
+
+            return builder;
+        }
+
+        public ArgumentBuilder<T> AddMainArgument<T>()
+        {
+            var builder = new ArgumentBuilder<T>(this);
+            builder.ArgumentDefinition.Name = String.Empty;
+            builder.ArgumentDefinition.ShortName = String.Empty;
+            this.ArgumentBuilders.Add(builder);
+
             return builder;
         }
     }

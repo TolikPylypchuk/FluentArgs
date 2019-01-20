@@ -18,13 +18,23 @@ namespace FluentArgs.Builders
 
         public ArgumentBuilder<T> WithName(string name)
         {
-            this.ArgumentDefinition.Name = name ?? throw new ArgumentNullException(nameof(name));
+            if (name == String.Empty)
+            {
+                throw new ArgumentOutOfRangeException(nameof(name), "Only the main argument can have an empty name.");
+            }
+
+            this.ArgumentDefinition.Name = name;
             return this;
         }
 
         public ArgumentBuilder<T> WithShortName(string shortName)
         {
-            this.ArgumentDefinition.ShortName = shortName ?? throw new ArgumentNullException(nameof(shortName));
+            if (shortName == String.Empty)
+            {
+                throw new ArgumentOutOfRangeException(nameof(shortName), "Only the main argument can have an empty name.");
+            }
+
+            this.ArgumentDefinition.ShortName = shortName;
             return this;
         }
 

@@ -24,7 +24,8 @@
                         .WithPlaceholder("number")
                         .And()
                     .And()
-                .Build(args);
+                .Build(args)
+                .Value;
 
             string inputFile = arguments.Get<string>("input").Value;
             string outputFile = arguments.Get<string>("output").Value;

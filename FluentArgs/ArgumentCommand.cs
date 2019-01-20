@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 
 namespace FluentArgs
 {
     public class ArgumentCommand : ArgumentContainer
     {
-        internal ArgumentCommand(IEnumerable arguments, ArgumentCommand command)
+        internal ArgumentCommand(IEnumerable<object> arguments, ArgumentCommand command)
             : base(arguments, command)
         { }
 

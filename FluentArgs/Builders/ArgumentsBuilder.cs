@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using FluentArgs.Converters;
 using FluentArgs.Providers;
@@ -49,6 +48,7 @@ namespace FluentArgs.Builders
             this.RemoveConverter<T>();
             this.RemoveProvider<T>();
             this.providers.Add(provider ?? throw new ArgumentNullException(nameof(provider)));
+
             return this;
         }
 
@@ -62,6 +62,7 @@ namespace FluentArgs.Builders
         {
             var builder = new CommandBuilder(this);
             this.commandBuilders.Add(builder);
+
             return builder;
         }
 
@@ -69,10 +70,11 @@ namespace FluentArgs.Builders
         {
             var builder = new CommandBuilder(this) { Name = String.Empty };
             this.commandBuilders.Add(builder);
+
             return builder.WithName(String.Empty);
         }
 
-        public Arguments Build(string[] args)
+        public Result<Arguments> Build(string[] args)
             => throw new NotImplementedException();
 
         private void RemoveConverter<T>()

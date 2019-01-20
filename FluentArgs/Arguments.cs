@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 
 using FluentArgs.Builders;
 using FluentArgs.Converters;
@@ -11,7 +11,7 @@ namespace FluentArgs
         public static readonly string DefaultNamePrefix = "--";
         public static readonly string DefaultShortNamePrefix = "-";
 
-        internal Arguments(IEnumerable arguments, ArgumentCommand command)
+        internal Arguments(IEnumerable<object> arguments, ArgumentCommand command)
             : base(arguments, command)
         { }
 
